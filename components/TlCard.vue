@@ -32,7 +32,7 @@ const props = defineProps({
         default: 'md',
     },
     rounded: {
-        type: String as PropType<'sm' | 'md' | 'none'>,
+        type: String as PropType<'sm' | 'md' | 'lg' | 'xl' | 'none'>,
         default: 'sm',
     },
     border: {
@@ -215,6 +215,8 @@ function setRounded() {
     const roundedSet: any = {
         sm: 'rounded',
         md: 'rounded-md',
+        lg: 'rounded-lg',
+        xl: 'rounded-xl',
         none: '',
     }
 
