@@ -18,7 +18,7 @@ const props = defineProps({
     },
     fit: {
         type: String,
-        default: 'cover',
+        default: 'fill',
     },
     format: {
         type: String,
