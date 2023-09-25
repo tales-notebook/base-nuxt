@@ -60,8 +60,8 @@ onMounted(() => {
             </div>
         </div>
 
-        <div class="flex justify-center absolute bottom-0 bg-black w-full">
-            <div class="flex justify-center my-2 py-1 gap-x-2 absolute bottom-0 bg-main-background rounded-full">
+        <div class="flex justify-center absolute bottom-0 w-full overflow-x-auto">
+            <div class="flex justify-center my-2 py-1 px-2 gap-x-2 bg-main-background rounded-full">
                 <tl-btn
                     size="xs"
                     icon
