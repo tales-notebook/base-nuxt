@@ -33,7 +33,7 @@ const props = defineProps({
     },
     rounded: {
         type: String as PropType<'sm' | 'md' | 'lg' | 'xl' | 'none'>,
-        default: 'sm',
+        default: 'xl',
     },
     border: {
         type: String as PropType<'sm' | 'md' | 'transparent' | 'none'>,

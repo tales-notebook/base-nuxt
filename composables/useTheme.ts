@@ -20,14 +20,7 @@ const defaultTheme = {
     },
 }
 
-export function useTheme() {
-    const isDark = useCookie<Theme['dark']>('tl-app:theme:dark', {
-        default: () => false,
-    })
-
-    const themeName = useCookie<string>('tl-app:theme:current-theme', {
-        default: () => 'default',
-    })
+export function useTheme(isDark = ref(true), themeName = ref('default')) {
 
     const themes = ref([
         {
