@@ -29,11 +29,10 @@
 }
 
 html {
-    @apply overflow-hidden;
+    scroll-behavior: smooth;
 }
 
 body {
-    @apply overflow-hidden;
     @apply text-main-text;
     @apply bg-main-background;
 }

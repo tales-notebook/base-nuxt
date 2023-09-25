@@ -5,7 +5,7 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/image'],
-  css: [resolve('assets/css/tailwind.css')],
+  css: [resolve('assets/css/tailwind.css'), resolve('assets/css/main.css')],
   vue: {
     defineModel: true
   },
