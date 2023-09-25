@@ -1,6 +1,11 @@
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+const currentDir = dirname(fileURLToPath(import.meta.url))
+
 export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/image'],
-  css: ['./assets/css/tailwind.css', './assets/css/main.css'],
+  css: [join(currentDir, './assets/css/tailwind.css'), join(currentDir, './assets/css/main.css')],
   vue: {
     defineModel: true
   },
