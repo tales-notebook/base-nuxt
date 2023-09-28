@@ -53,11 +53,13 @@ const dialog = useQuickDialog()
                         class="w-full"
                         @click="d.onCancel()"
                     >
-                        {{ $t('messages.cancel') }}
+                        <!-- {{ $t('messages.cancel') }} -->
+                        Cancel
                     </tl-btn>
 
                     <tl-btn v-if="!d.hideOk" class="w-full" color="accent" @click="d.onOk()">
-                        {{ $t('messages.ok') }}
+                        <!-- {{ $t('messages.ok') }} -->
+                        Ok
                     </tl-btn>
                 </div>
             </tl-card-content>

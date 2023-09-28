@@ -26,7 +26,7 @@ export default <Partial<Config>>{
         `${__dirname}/layouts/**/*.vue`,
         `${__dirname}/pages/**/*.vue`,
         `${__dirname}/composables/**/*.{js,ts}`,
-        `${__dirname}/content/**/*.{md}`,
+        `${__dirname}/content/**/*.md`,
         `${__dirname}/modules/**/**/*.{vue,js,ts}`,
         `${__dirname}/app.vue`,
     ],

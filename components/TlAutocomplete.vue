@@ -120,7 +120,8 @@ const { focused } = useFocusWithin(inputRef)
                 <tl-list ref="list">
                     <tl-list-item v-if="!options.length">
                         <div class="text-gray-500 text-center w-full">
-                            {{ $t('messages.noEntity', [$t('messages.items')]) }}
+                            <!-- {{ $t('messages.noEntity', [$t('messages.items')]) }} -->
+                            No items
                         </div>
                     </tl-list-item>
                     <template v-for="(o, index) in options" :key="index">

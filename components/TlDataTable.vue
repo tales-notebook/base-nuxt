@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends TableRow = TableRow">
-import { TableColumn, TableRow, TablePagination } from '@/composables/defineTable'
+import { TableColumn, TableRow, TablePagination } from '../composables/defineTable'
 import merge from 'lodash-es/merge'
 import get from 'lodash-es/get'
 import upperCase from 'lodash-es/upperCase'
@@ -144,7 +144,10 @@ function findColumnKey(column: TableColumn<T>): string {
 
         <tl-card v-if="rows.length === 0" class="flex flex-wrap w-full">
             <tl-card-content class="text-center">
-                <slot name="empty">{{ $t('messages.noEntity', [$t('messages.data')]) }}</slot>
+                <slot name="empty">
+                    <!-- {{ $t('messages.noEntity', [$t('messages.data')]) }} -->
+                    No items
+                </slot>
             </tl-card-content>
         </tl-card>
 
@@ -182,7 +185,8 @@ function findColumnKey(column: TableColumn<T>): string {
                         class="px-4 h-12 text-center text-gray-500"
                     >
                         <slot name="empty">
-                            {{ $t('messages.noEntity', [$t('messages.data')]) }}
+                            <!-- {{ $t('messages.noEntity', [$t('messages.data')]) }} -->
+                            No items
                         </slot>
                     </td>
                 </tr>

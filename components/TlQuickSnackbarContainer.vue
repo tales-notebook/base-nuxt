@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { SnackbarItem } from '@/composables/useQuickSnackbar'
+import { SnackbarItem } from '../composables/useQuickSnackbar'
 import uppFirst from 'lodash-es/upperFirst'
 
 const snackbar = useQuickSnackbar()
 
-const colorList = {
+const colorList: any = {
     zinc: 'bg-secondary-background text-main-text',
     accent: 'bg-accent text-white',
     danger: 'bg-red-500 text-white',

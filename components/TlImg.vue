@@ -43,7 +43,7 @@ function onLoad() {
 }
 
 const imageStyle = computed(() => {
-    const style: Record<string, string> = {}
+    const style: Record<string, any> = {}
 
     if (props.height) {
         style.height = css.toMeasurement(props.height)
