@@ -4,6 +4,10 @@ const props = defineProps({
         type: String,
         default: 'accent',
     },
+    size: {
+        type: String as PropType<'sm' | 'md' | 'lg'>,
+        default: 'md',
+    },
     variant: {
         type: String as PropType<'default' | 'outlined'>,
         default: 'default',
@@ -11,7 +15,7 @@ const props = defineProps({
 })
 
 const classMap = ref(
-    new Map([['base', 'inline transition-all rounded-full text-sm px-4 text-center py-1']])
+    new Map([['base', 'inline transition-all rounded-full text-center']])
 )
 
 const classes = computed(() => Array.from(classMap.value.values()).join(' '))
@@ -54,6 +58,22 @@ function setVariant() {
 watch([() => props.variant, () => props.color], setVariant, {
     immediate: true,
 })
+
+// sizes
+function setSizes() {
+    const sizeList: any = {
+        sm: 'text-xs px-4 py-1',
+        md: 'text-sm px-4 py-1',
+        lg: 'text-base px-4 py-1',
+    }
+
+    classMap.value.set('size', sizeList[props.size])
+}
+
+watch(() => props.size, setSizes, {
+    immediate: true,
+})
+
 </script>
 <template>
     <div :class="classes">
