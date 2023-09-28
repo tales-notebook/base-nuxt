@@ -181,9 +181,9 @@ function findColumnKey(column: TableColumn<T>): string {
                         :colspan="columnsComputed.length"
                         class="px-4 h-12 text-center text-gray-500"
                     >
-                        <slot name="empty">{{
-                            $t('messages.noEntity', [$t('messages.data')])
-                        }}</slot>
+                        <slot name="empty">
+                            {{ $t('messages.noEntity', [$t('messages.data')]) }}
+                        </slot>
                     </td>
                 </tr>
 

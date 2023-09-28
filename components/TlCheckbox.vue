@@ -48,16 +48,19 @@ function onClick() {
 </script>
 <template>
     <div
-        class="flex h-10 gap-x-4 items-center cursor-pointer"
+        class="flex h-8 gap-x-2 items-center cursor-pointer"
         :class="[loading ? 'opacity-75' : '']"
         @click="onClick"
     >
         <tl-spinner v-if="loading" />
 
-        <tl-icon v-else-if="isSelected" name="mdi:checkbox-marked" class="text-accent" />
+        <tl-icon
+            v-else
+            :name="isSelected ? 'mdi:checkbox-marked' : 'mdi:checkbox-blank-outline'"
+            :class="isSelected ? 'text-accent' : 'text-main-text'"
+            size="18"
+        />
 
-        <tl-icon v-else name="mdi:checkbox-blank-outline" class="text-main-text" />
-
-        <span v-if="label" class="font-bold mr-auto">{{ label }}</span>
+        <span v-if="label" class="font-medium mr-auto text-sm">{{ label }}</span>
     </div>
 </template>
