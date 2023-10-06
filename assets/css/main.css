@@ -40,7 +40,6 @@ body {
 .tl-app {
     @apply text-main-text;
     @apply bg-main-background;
-    --color-accent: v-bind(theme.current.colors.accent);
 }
 
 .dark {

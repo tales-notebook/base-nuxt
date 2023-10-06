@@ -20,7 +20,10 @@ const defaultTheme = {
     },
 }
 
-export function useTheme(isDark = ref(true), themeName = ref('default')) {
+export function useTheme() {
+
+    const isDark = usePreference('isDark', "false")
+    const themeName = usePreference<string>('themeName', 'Default')
 
     const themes = ref([
         {
@@ -68,49 +71,67 @@ export function useTheme(isDark = ref(true), themeName = ref('default')) {
     const current = computed<Theme>(() => {
         const theme = themes.value.find((t) => t.name === themeName.value)
 
-        if (theme) {
-            return {
-                dark: isDark.value,
-                colors: theme.colors,
-            } as Theme
-        }
-
         return {
-            dark: isDark.value,
-            colors: defaultTheme.colors,
+            dark: isDark.value === 'true',
+            colors: theme?.colors ?? defaultTheme.colors,
         }
     })
 
+    async function load(){
+        await isDark.load()
+        await themeName.load()
+    }
+
     function setDark(value: boolean) {
-        isDark.value = value
+        isDark.value = value ? 'true' : 'false'
     }
 
     function setTheme(name: string) {
         themeName.value = name
     }
 
-    watch(
-        current,
-        ({ colors, dark }) => {
-            if (process.client) {
-                const html = document.querySelector('html')
+    function findRoot(){
+        const html = process.client ? document.querySelector('html') : undefined
 
-                if (html) {
-                    html.style.setProperty('--color-accent', colors.accent)
-                    html.style.setProperty('--color-danger', colors.danger)
-                    html.style.setProperty('--color-warning', colors.warning)
-                    html.style.setProperty('--color-success', colors.success)
+        return html
+    }
 
-                    html.classList.toggle('dark', dark)
-                }
-            }
-        },
-        { immediate: true }
-    )
+    // watch(() => isDark.value, (value) => {
+    //     const root = findRoot()
+
+    //     if (!root) return
+
+    //     if (value) {
+    //         root.classList.add('dark')
+    //     }
+
+    //     if (!value) {
+    //         root.classList.remove('dark')
+    //     }
+
+    // })
+    
+    // watch(() => themeName.value, (value) => {
+    //     const root = findRoot()
+
+    //     if (!root) return
+
+    //     const theme = themes.value.find((t) => t.name === value)
+
+    //     if (!theme) return
+
+    //     root.style.setProperty('--color-accent', theme.colors.accent)
+    //     root.style.setProperty('--color-danger', theme.colors.danger)
+    //     root.style.setProperty('--color-warning', theme.colors.warning)
+    //     root.style.setProperty('--color-success', theme.colors.success)
+
+    // }, { immediate: true })
 
     return reactive({
+        themeName,
         current,
         themes,
+        load,
 
         setDark,
         setTheme,
