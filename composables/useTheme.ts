@@ -11,7 +11,7 @@ interface Theme {
 }
 
 const defaultTheme = {
-    dark: false,
+    dark: true,
     colors: {
         accent: '168 85 247',
         danger: '255 59 48',
@@ -22,7 +22,7 @@ const defaultTheme = {
 
 export function useTheme() {
 
-    const isDark = usePreference('isDark', "false")
+    const isDark = usePreference('isDark', "true")
     const themeName = usePreference<string>('themeName', 'Default')
 
     const themes = ref([

@@ -1,4 +1,5 @@
 import { debounce } from "lodash-es";
+import { makeKey } from "./makeKey";
 
 interface PreferenceManager {
     get: (key: string) => Promise<any>;
@@ -10,6 +11,52 @@ const key = Symbol('tl-base-nuxt:preference-manager') as InjectionKey<Preference
 
 export function providePreferenceManager(manager: PreferenceManager) {
     provide(key, manager);
+}
+
+export function provideCookiePreferenceManager(prefix = 'tl-app') {
+    const nuxtApp = useNuxtApp()    
+
+    providePreferenceManager({
+        get: async (key) => {
+            return nuxtApp.runWithContext(() => {
+                const cookieKey = makeKey(prefix, 'preferences', key)
+
+                const cookie = useCookie(cookieKey)
+
+                return String(cookie.value)
+            })
+        },
+        set: async (key, value) => {
+            return nuxtApp.runWithContext(() => {
+                const cookieKey = makeKey(prefix, 'preferences', key)
+
+                const cookie = useCookie(cookieKey)
+
+                cookie.value = String(value)
+            })
+        },
+    })
+}
+
+export function provideLocalStoragePreferenceManager(prefix = 'tl-app') {
+    providePreferenceManager({
+        get: async (key) => {
+           const preferenceKey = makeKey(prefix, 'preferences', key)
+
+           if (process.client) {
+                return localStorage.getItem(preferenceKey)
+           }
+
+        },
+        set: async (key, value) => {
+            const preferenceKey = makeKey(prefix, 'preferences', key)
+
+            if (process.client) {
+                localStorage.setItem(preferenceKey, String(value))
+            }
+
+        },
+    })
 }
 
 export function usePreferenceManager() {
