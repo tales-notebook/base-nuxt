@@ -91,41 +91,39 @@ export function useTheme() {
     }
 
     function findRoot(){
-        const html = process.client ? document.querySelector('html') : undefined
-
-        return html
+        return process.client ? document.querySelector('html') : undefined
     }
 
-    // watch(() => isDark.value, (value) => {
-    //     const root = findRoot()
+    watch(() => isDark.value, (value) => {
+        const root = findRoot()
 
-    //     if (!root) return
+        if (!root) return
 
-    //     if (value) {
-    //         root.classList.add('dark')
-    //     }
+        if (value) {
+            root.classList.add('dark')
+        }
 
-    //     if (!value) {
-    //         root.classList.remove('dark')
-    //     }
+        if (!value) {
+            root.classList.remove('dark')
+        }
 
-    // })
+    }, { immediate: true })
     
-    // watch(() => themeName.value, (value) => {
-    //     const root = findRoot()
+    watch(() => themeName.value, (value) => {
+        const root = findRoot()
 
-    //     if (!root) return
+        if (!root) return
 
-    //     const theme = themes.value.find((t) => t.name === value)
+        const theme = themes.value.find((t) => t.name === value)
 
-    //     if (!theme) return
+        if (!theme) return
 
-    //     root.style.setProperty('--color-accent', theme.colors.accent)
-    //     root.style.setProperty('--color-danger', theme.colors.danger)
-    //     root.style.setProperty('--color-warning', theme.colors.warning)
-    //     root.style.setProperty('--color-success', theme.colors.success)
+        root.style.setProperty('--color-accent', theme.colors.accent)
+        root.style.setProperty('--color-danger', theme.colors.danger)
+        root.style.setProperty('--color-warning', theme.colors.warning)
+        root.style.setProperty('--color-success', theme.colors.success)
 
-    // }, { immediate: true })
+    }, { immediate: true })
 
     return reactive({
         themeName,
