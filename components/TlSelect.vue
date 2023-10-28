@@ -27,41 +27,87 @@ const props = defineProps({
         type: String as unknown as PropType<keyof T>,
         default: 'value',
     },
+    multiple: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const model = defineModel()
+const modelMultiple = defineModel('multiple', {
+    type: Array as PropType<any[]>,
+    default: null,
+})
+
+const displayValue = computed(() => {
+
+    if (!modelMultiple.value) {
+        const option = props.options.find((o) => findValue(o) === model.value)
+    
+        return option ? findLabel(option) : ''
+    }
+
+    return modelMultiple.value.map((o) => findLabel(o)).join(', ')
+})
+
+function select(option: T) {
+    if (!modelMultiple.value) {
+        model.value = findValue(option)
+        return
+    }
+
+    const index = modelMultiple.value.findIndex((o) => findValue(o) === findValue(option))
+
+    if (index === -1) {
+        modelMultiple.value.push(option)
+    }
+
+    if (index !== -1) {
+        modelMultiple.value.splice(index, 1)
+    }
+}
+
+function isSelected(option: T) {
+    if (!modelMultiple.value) {
+        return findValue(option) === model.value
+    }
+
+    return !!modelMultiple.value.find((o) => findValue(o) === findValue(option))
+}
 
 function findLabel(option: T) {
-    return option[props.labelKey as keyof T]
+    return option[props.labelKey as keyof T] as string
 }
 
 function findValue(option: T) {
     return option[props.valueKey as keyof T]
 }
 
-const displayValue = computed(() => {
-    const option = props.options.find((o) => findValue(o) === model.value)
-
-    return option ? findLabel(option) : ''
-})
 
 // menu
 
 const inputRef = ref<HTMLInputElement | null>(null)
+const contentRef = ref<HTMLElement | null>(null)
 
-const { focused } = useFocusWithin(inputRef)
+const { focused: inputFocus } = useFocusWithin(inputRef)
+const { focused: contentFocus } = useFocusWithin(contentRef)
 
 const menu = computed(() => {
     if (props.readonly) {
         return false
     }
 
-    return focused.value
+    return inputFocus.value || contentFocus.value
 })
 </script>
 
 <template>
-    <tl-menu :model-value="menu" offset-y :open-on-click="false">
+    <tl-menu
+        :model-value="menu"
+        :open-on-click="false"
+        :close-on-content-click="!modelMultiple"
+        offset-y
+    >
         <template #activator="menuProps">
             <tl-base-input
                 :label="label"
@@ -75,6 +121,7 @@ const menu = computed(() => {
                         v-bind="baseInput.attrs"
                         readonly
                         class="w-full focus:outline-none bg-transparent px-4 py-2 z-10 cursor-pointer"
+                        :class="modelMultiple ? 'truncate' : ''"
                     />
                 </template>
 
@@ -85,14 +132,25 @@ const menu = computed(() => {
         </template>
 
         <template #default="{ activatorRects }">
-            <tl-card :width="activatorRects.width">
+            <tl-card :width="activatorRects.width" ref="contentRef">
                 <tl-list-item
                     v-for="(o, index) in options"
                     :key="index"
                     color="primary"
-                    @click="model = findValue(o)"
+                    @click="select(o)"
+                    tabindex="-1"
                 >
-                    {{ findLabel(o) }}
+                    
+                    <tl-checkbox
+                        v-if="modelMultiple"
+                        :model-value="isSelected(o)"
+                        :label="findLabel(o)"
+                    />
+
+                    <div v-else>
+                        {{ findLabel(o) }}
+                    </div>
+
                 </tl-list-item>
             </tl-card>
         </template>
