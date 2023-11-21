@@ -3,7 +3,7 @@ import uniqueId from 'lodash-es/uniqueId'
 const props = defineProps({
     label: {
         type: String,
-        default: ' ',
+        default: '',
     },
     placeholder: {
         type: String,
@@ -30,8 +30,11 @@ const inputAttrs = ref<any>({
 })
 </script>
 <template>
-    <div class="tl-base-input" :class="$props.readonly ? 'border-dashed' : ''">
-        <div class="tl-input-sidelines-container">
+    <div
+        class="tl-base-input"
+        :class="[$props.readonly ? 'border-dashed' : '', !label ? 'no-label border-t' : '']"
+    >
+        <div v-if="label" class="tl-input-sidelines-container">
             <div
                 class="w-3 tl-input--side-borders"
                 :class="[$props.readonly ? 'border-dashed' : '']"
@@ -60,7 +63,7 @@ const inputAttrs = ref<any>({
 
 <style lang="scss">
 .tl-base-input {
-    @apply border border-t-0 border-main-borders;
+    @apply border-x border-b border-main-borders;
     @apply w-full;
     @apply flex items-center;
     @apply relative rounded;
@@ -69,9 +72,17 @@ const inputAttrs = ref<any>({
         @apply absolute top-0 left-0 flex w-full items-start z-0;
     }
 
+    
     input::placeholder,
     textarea::placeholder {
         @apply opacity-0;
+    }
+
+    &.no-label {
+        input::placeholder,
+        textarea::placeholder {
+            @apply opacity-50;
+        }
     }
 
     input:-webkit-autofill,
@@ -112,12 +123,13 @@ const inputAttrs = ref<any>({
     &:focus-within,
     &:has(input:not(:placeholder-shown)),
     &:has(textarea:not(:placeholder-shown)) {
-        @apply border-t-0;
+        // @apply border-t-0;
 
         input::placeholder,
         textarea::placeholder {
-            @apply opacity-25;
+            @apply opacity-50;
         }
+
 
         label {
             @apply border-transparent;
