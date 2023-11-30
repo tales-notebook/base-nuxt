@@ -36,7 +36,7 @@ const props = defineProps({
         default: 'md',
     },
     rounded: {
-        type: String as PropType<'sm' | 'md' | 'lg'>,
+        type: String as PropType<'sm' | 'md' | 'lg' | 'xl' | 'full'>,
         default: 'md',
     },
     to: {
@@ -59,7 +59,6 @@ classMap.value.set(
         'uppercase',
         'font-medium',
         'relative',
-        'text-sm',
         'overflow-hidden',
         'disabled:opacity-50 disabled:cursor-not-allowed',
     ].join(' ')
@@ -122,7 +121,7 @@ watch([() => props.variant, () => props.color], loadVariant, {
 // size
 function setSize() {
     const sizeList = {
-        xs: 'px-2 p-2 text-xs',
+        xs: 'px-2 py-1 text-xs',
         sm: 'px-4 py-2 text-xs',
         md: 'px-4 py-2 text-sm',
         lg: 'px-5 py-3 text-xl',
@@ -146,6 +145,8 @@ function setRounded() {
         sm: 'rounded-sm',
         md: 'rounded-md',
         lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        full: 'rounded-full',
     }
 
     classMap.value.set('rounded', roundedList[props.rounded])
@@ -176,7 +177,7 @@ const classes = computed(() => {
             <tl-spinner size="22" />
         </div>
 
-        <div :class="[loading ? 'opacity-0' : 'opacity-100']" class="flex gap-x-2">
+        <div :class="[loading ? 'opacity-0' : 'opacity-100']" class="flex items-center gap-x-2">
             <tl-icon v-if="iconName" :name="iconName" :size="size" />
             <slot />
         </div>
