@@ -43,6 +43,10 @@ const props = defineProps({
         type: [String, Object] as PropType<NuxtLinkProps['to']>,
         default: null,
     },
+    uppercase: {
+        type: Boolean,
+        default: true,
+    },
 })
 
 const classMap = ref(new Map<string, string>())
@@ -56,7 +60,6 @@ classMap.value.set(
         'justify-center',
         'transition-all',
         'duration-200',
-        'uppercase',
         'font-medium',
         'relative',
         'overflow-hidden',
@@ -157,6 +160,15 @@ function setRounded() {
 }
 
 watch([() => props.rounded, () => props.rounded], setRounded, { immediate: true })
+
+// uppercase
+function setUppercase() {
+    if (props.uppercase) {
+        classMap.value.set('uppercase', 'uppercase')
+    }
+}
+
+watch(() => props.uppercase, setUppercase, { immediate: true })
 
 // classes
 
