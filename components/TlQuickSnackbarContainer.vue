@@ -29,7 +29,7 @@ function findColor(item: SnackbarItem) {
             :class="findColor(item)"
         >
             <div class="font-bold text-sm">
-                {{ uppFirst(item.title.toLowerCase()) }}
+                {{ uppFirst(item.title?.toLowerCase()) }}
             </div>
 
             <div v-if="item.message" class="text-xs">

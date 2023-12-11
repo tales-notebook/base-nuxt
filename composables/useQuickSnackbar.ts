@@ -45,7 +45,25 @@ export function useQuickSnackbar() {
         show({ title: message, color: 'danger' })
     }
 
-    function requestError(error: AxiosError<any>) {
+    function success(message: string) {
+        show({ title: message, color: 'accent' })
+    }
+
+    function serverError(responseData: any){
+        if (Array.isArray(responseData.errors)) {
+            return responseData.errors.forEach((error: any) => {
+                show({ title: error.message, color: 'danger' })
+            })
+        }
+
+        if (responseData.message) {
+            return show({ title: responseData.message, color: 'danger' })
+        }
+
+        return show({ title: tm.t('messages.errors.internalServerError'), color: 'danger' })
+    }
+
+    function requestError(error: any) {
         const color = 'danger'
 
         const response = error.response
@@ -58,22 +76,10 @@ export function useQuickSnackbar() {
             return show({ title: response.statusText, color })
         }
 
-        if (Array.isArray(data.errors)) {
-            return data.errors.forEach((error: any) => {
-                show({ title: error.message, color })
-            })
-        }
-
-        if (data.message) {
-            return show({ title: data.message, color })
-        }
-
-        if (response.status === 500) {
-            return show({ title: tm.t('messages.errors.internalServerError'), color })
-        }
+        return serverError(data)
     }
 
-    function response(responseObject: AxiosResponse, options?: Partial<SnackbarOptions>) {
+    function response(responseObject: any, options?: Partial<SnackbarOptions>) {
         const color = options?.color ?? 'accent'
 
         if (responseObject.data.message) {
@@ -92,8 +98,10 @@ export function useQuickSnackbar() {
         error,
         remove,
         response,
+        success,
         request,
         requestError,
+        serverError,
     })
 }
 

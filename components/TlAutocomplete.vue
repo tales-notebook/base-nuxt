@@ -29,6 +29,10 @@ const props = defineProps({
         type: Number,
         default: undefined,
     },
+    autoSelectFirst: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const model = defineModel()
@@ -89,6 +93,20 @@ watch(
 const inputRef = ref<HTMLInputElement | null>(null)
 
 const { focused } = useFocusWithin(inputRef)
+
+// auto-select first
+const firstRun = ref(true)
+
+watch(() => props.options.length, (length) => {
+    if (!firstRun.value || !length) {
+        return
+    }
+
+    if (props.autoSelectFirst) {
+        onSelect(props.options[0])
+    }
+})
+
 </script>
 
 <template>
