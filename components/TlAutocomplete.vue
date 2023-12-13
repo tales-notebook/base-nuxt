@@ -123,6 +123,7 @@ watch(() => props.options.length, (length) => {
                         ref="inputRef"
                         v-model="search"
                         class="w-full focus:outline-none bg-transparent px-4 py-2 z-10"
+                        :placeholder="$t('messages.search')"
                         @keydown.backspace="onBackspace"
                     />
                 </template>
@@ -134,7 +135,7 @@ watch(() => props.options.length, (length) => {
         </template>
 
         <template #default="{ activatorRects }">
-            <tl-card class="mt-1" :width="activatorRects.width">
+            <tl-card :width="activatorRects.width" border="sm" rounded="none">
                 <tl-list ref="list">
                     <tl-list-item v-if="!options.length">
                         <div class="text-gray-500 text-center w-full">
