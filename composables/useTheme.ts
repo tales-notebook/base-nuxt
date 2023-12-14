@@ -94,7 +94,7 @@ export function useTheme() {
         return process.client ? document.querySelector('html') : undefined
     }
 
-    watch(() => isDark.value, (value) => {
+    watch(() => isDark.value === 'true', (value) => {
         const root = findRoot()
 
         if (!root) return
