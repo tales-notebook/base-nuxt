@@ -61,6 +61,9 @@ function onClick() {
             size="18"
         />
 
-        <span v-if="label" class="font-medium mr-auto text-sm">{{ label }}</span>
+        <slot v-if="label || $slots.label" name="label">
+            <span  class="font-medium mr-auto text-sm">{{ label }}</span>
+        </slot>
+
     </div>
 </template>
