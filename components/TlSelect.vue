@@ -132,11 +132,10 @@ const menu = computed(() => {
         </template>
 
         <template #default="{ activatorRects }">
-            <tl-card :width="activatorRects.width" ref="contentRef">
+            <tl-card :width="activatorRects.width" ref="contentRef" rounded="none" border="sm">
                 <tl-list-item
                     v-for="(o, index) in options"
                     :key="index"
-                    color="primary"
                     @click="select(o)"
                     tabindex="-1"
                 >

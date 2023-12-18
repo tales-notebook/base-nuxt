@@ -5,7 +5,7 @@ import { NuxtLinkProps } from 'nuxt/app'
 const props = defineProps({
     color: {
         type: String,
-        default: 'secondary',
+        default: 'default',
     },
     width: {
         type: [String, Number],
@@ -65,6 +65,7 @@ classMap.value.set('base', ['transition-all', 'overflow-hidden', 'relative'].joi
 // color
 function setColor() {
     const colorSet: any = {
+        default: 'bg-white dark:bg-zinc-900',
         transparent: 'bg-transparent',
         accent: 'bg-accent text-white',
         primary: 'bg-main-background',
