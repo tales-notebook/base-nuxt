@@ -16,8 +16,6 @@ const items = ref<SnackbarItem[]>([])
 const lastId = ref(0)
 
 export function useQuickSnackbar() {
-    const tm = useI18n()
-
     function remove(index: number) {
         const itemIndex = items.value.findIndex((item) => item.id === index)
 
@@ -60,7 +58,7 @@ export function useQuickSnackbar() {
             return show({ title: responseData.message, color: 'danger' })
         }
 
-        return show({ title: tm.t('messages.errors.internalServerError'), color: 'danger' })
+        return show({ title: 'Internal server error', color: 'danger' })
     }
 
     function requestError(error: any) {
@@ -103,6 +101,14 @@ export function useQuickSnackbar() {
         requestError,
         serverError,
     })
+}
+
+export function showSnackbarRequestError(error: any) {
+    useQuickSnackbar().serverError(error)
+}
+
+export function showSnackbarSuccess(message: string) {
+    useQuickSnackbar().success(message)
 }
 
 export function showQuickSnackbar(options: SnackbarOptions) {
