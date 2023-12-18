@@ -8,7 +8,7 @@ const props = defineProps({
     },
     color: {
         type: String as PropType<'primary' | 'none' | 'secondary'>,
-        default: 'none',
+        default: 'default',
     },
     to: {
         type: [String, Object],
@@ -56,6 +56,7 @@ const classes = computed(() => {
 // color
 function setColor() {
     const colorList = {
+        default: '',
         primary: 'bg-main-background',
         secondary: 'bg-secondary-background',
         none: '',
@@ -64,6 +65,7 @@ function setColor() {
     const isClickable = [props.clickable, attrs.onClick, props.to].some((value) => value)
 
     if (isClickable) {
+        colorList.default = 'hover:bg-accent/10'
         colorList.primary = 'bg-main-background hover:bg-secondary-background/90'
         colorList.secondary = 'bg-secondary-background hover:bg-main-background/90'
         colorList.none = 'hover:bg-main-background/90'
