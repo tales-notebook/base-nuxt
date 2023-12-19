@@ -12,7 +12,7 @@ const model = defineModel({
 })
 </script>
 <template>
-    <Teleport to="body">
+    <Teleport to="#tl-app-dialog-container">
         <transition
             enter-active-class="transition duration-200"
             leave-active-class="transition duration-200"

@@ -19,13 +19,7 @@ const defaultTheme = {
         success: '20 184 166',
     },
 }
-
-export function useTheme() {
-
-    const isDark = usePreference('isDark', "true")
-    const themeName = usePreference<string>('themeName', 'Default')
-
-    const themes = ref([
+const themes = ref([
         {
             name: 'Default',
             colors: defaultTheme.colors,
@@ -68,6 +62,28 @@ export function useTheme() {
         },
     ])
 
+interface ProvideThemeOptions {
+    dark: boolean
+}
+
+const key = 'theme'
+
+function createThemeManager(options: ProvideThemeOptions) {
+    const dark = ref(options.dark)
+    const themeName = ref('Default')
+}
+
+export function provideTheme(options: ProvideThemeOptions) {
+
+}
+
+export function useTheme() {
+
+    const isDark = usePreference('isDark', "true")
+    const themeName = usePreference('themeName', 'Default')
+
+    
+
     const current = computed<Theme>(() => {
         const theme = themes.value.find((t) => t.name === themeName.value)
 
@@ -90,42 +106,8 @@ export function useTheme() {
         themeName.value = name
     }
 
-    function findRoot(){
-        return process.client ? document.querySelector('html') : undefined
-    }
-
-    watch(() => isDark.value === 'true', (value) => {
-        const root = findRoot()
-
-        if (!root) return
-
-        if (value) {
-            root.classList.add('dark')
-        }
-
-        if (!value) {
-            root.classList.remove('dark')
-        }
-
-    }, { immediate: true })
-    
-    watch(() => themeName.value, (value) => {
-        const root = findRoot()
-
-        if (!root) return
-
-        const theme = themes.value.find((t) => t.name === value)
-
-        if (!theme) return
-
-        root.style.setProperty('--color-accent', theme.colors.accent)
-        root.style.setProperty('--color-danger', theme.colors.danger)
-        root.style.setProperty('--color-warning', theme.colors.warning)
-        root.style.setProperty('--color-success', theme.colors.success)
-
-    }, { immediate: true })
-
     return reactive({
+        isDark: computed(() => isDark.value === 'true'),
         themeName,
         current,
         themes,

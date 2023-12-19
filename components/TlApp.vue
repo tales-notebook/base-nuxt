@@ -14,6 +14,9 @@ await theme.load()
             '--color-success': theme.current.colors.success,
         }"
     >
+
+        <div id="tl-app-dialog-container" />
+
         <tl-quick-dialog-container />
         <tl-quick-snackbar-container />
 
